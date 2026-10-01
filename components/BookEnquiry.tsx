@@ -42,8 +42,8 @@ export default function BookEnquiry() {
 
     const next: FieldErrors = {};
     if (!name) next.name = t.bookNameError;
-    if (!phone) next.phone = "Enter a phone number.";
-    if (!treatmentVal) next.treatment = "Select a treatment.";
+    if (!phone) next.phone = t.bookPhoneError;
+    if (!treatmentVal) next.treatment = t.bookTreatmentError;
     setErrors(next);
     if (Object.keys(next).length > 0) {
       const first = !name
@@ -75,9 +75,9 @@ export default function BookEnquiry() {
     <div className="book-panel booking-form">
       <div className="booking-steps" aria-label="Booking steps">
         <ol>
-          <li>Choose a treatment</li>
-          <li>Share your preferred time</li>
-          <li>Receive confirmation on WhatsApp</li>
+          <li>{t.bookStep1}</li>
+          <li>{t.bookStep2}</li>
+          <li>{t.bookStep3}</li>
         </ol>
       </div>
 
@@ -85,17 +85,21 @@ export default function BookEnquiry() {
         <div className="selected-treatment" aria-live="polite">
           <span aria-hidden="true">✓</span>
           <span>
-            Selected: <strong>{treatment}</strong>
+            {t.bookSelected}: <strong>{treatment}</strong>
           </span>
-          <button type="button" className="btn-text" onClick={() => setTreatment("")}>
-            Change
+          <button
+            type="button"
+            className="btn-text"
+            onClick={() => setTreatment("")}
+          >
+            {t.bookChange}
           </button>
         </div>
       ) : null}
 
       <form className="book-form" onSubmit={onSubmit} noValidate>
         <div className="field">
-          <label htmlFor="guest-name">Full name</label>
+          <label htmlFor="guest-name">{t.bookFullName}</label>
           <input
             id="guest-name"
             name="name"
@@ -119,14 +123,14 @@ export default function BookEnquiry() {
         </div>
 
         <div className="field">
-          <label htmlFor="guest-phone">Phone number</label>
+          <label htmlFor="guest-phone">{t.bookPhone}</label>
           <input
             id="guest-phone"
             name="phone"
             type="tel"
             autoComplete="tel"
             required
-            placeholder="e.g. 98xxx xxxxx"
+            placeholder={t.bookPhonePh}
             aria-invalid={errors.phone ? true : undefined}
             aria-describedby={errors.phone ? phoneErrorId : undefined}
             onChange={() =>
@@ -142,29 +146,36 @@ export default function BookEnquiry() {
           ) : null}
         </div>
 
-        <div className="field">
-          <label htmlFor="guest-treatment">Treatment or concern</label>
-          <select
-            id="guest-treatment"
-            name="treatment"
-            required
-            value={treatment}
-            onChange={(e) => {
-              setTreatment(e.target.value);
-              setErrors((prev) =>
-                prev.treatment ? { ...prev, treatment: undefined } : prev
-              );
-            }}
-            aria-invalid={errors.treatment ? true : undefined}
-            aria-describedby={errors.treatment ? treatmentErrorId : undefined}
-          >
-            <option value="">Select a treatment</option>
-            {ALL_TREATMENTS.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
+        <div className="field field-select">
+          <label htmlFor="guest-treatment">{t.bookTreatment}</label>
+          <div className="select-shell">
+            <select
+              id="guest-treatment"
+              name="treatment"
+              required
+              value={treatment}
+              onChange={(e) => {
+                setTreatment(e.target.value);
+                setErrors((prev) =>
+                  prev.treatment ? { ...prev, treatment: undefined } : prev
+                );
+              }}
+              aria-invalid={errors.treatment ? true : undefined}
+              aria-describedby={
+                errors.treatment ? treatmentErrorId : undefined
+              }
+            >
+              <option value="">{t.bookTreatmentSelect}</option>
+              {ALL_TREATMENTS.map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+            <span className="select-chevron" aria-hidden="true">
+              ▾
+            </span>
+          </div>
           {errors.treatment ? (
             <p className="field-error" id={treatmentErrorId} role="alert">
               {errors.treatment}
@@ -174,23 +185,28 @@ export default function BookEnquiry() {
 
         <div className="field-row">
           <div className="field">
-            <label htmlFor="guest-date">Preferred date</label>
+            <label htmlFor="guest-date">{t.bookDate}</label>
             <input id="guest-date" name="date" type="date" />
           </div>
-          <div className="field">
-            <label htmlFor="guest-time">Preferred time</label>
-            <select id="guest-time" name="time" defaultValue="morning">
-              {times.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
+          <div className="field field-select">
+            <label htmlFor="guest-time">{t.bookTimeLabel}</label>
+            <div className="select-shell">
+              <select id="guest-time" name="time" defaultValue="morning">
+                {times.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+              <span className="select-chevron" aria-hidden="true">
+                ▾
+              </span>
+            </div>
           </div>
         </div>
 
         <div className="field">
-          <label htmlFor="guest-note">Anything the clinic should know?</label>
+          <label htmlFor="guest-note">{t.bookAnything}</label>
           <textarea
             id="guest-note"
             name="note"
@@ -199,13 +215,9 @@ export default function BookEnquiry() {
           />
         </div>
 
-        <p className="form-hint">
-          Your details are sent only through WhatsApp when you choose to
-          continue. Clinic number: 90221 17458. Demo path — not a live booking
-          system.
-        </p>
-        <button type="submit" className="btn-primary">
-          Continue on WhatsApp
+        <p className="form-hint">{t.bookWaHint}</p>
+        <button type="submit" className="btn-primary btn-yellow">
+          {t.bookWaCta}
           <span aria-hidden="true"> →</span>
         </button>
       </form>

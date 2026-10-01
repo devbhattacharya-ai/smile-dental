@@ -80,7 +80,7 @@ export default function Header() {
               </p>
             ) : null}
           </div>
-          <a href="#book" className="btn-book-nav">
+          <a href="#book" className="btn-book-nav btn-yellow">
             {t.ctaBook}
             <span aria-hidden="true"> ↑</span>
           </a>
@@ -136,7 +136,7 @@ export default function Header() {
               {t.langMr}
             </button>
           </div>
-          <a href="#book" className="btn-book-nav" onClick={close}>
+          <a href="#book" className="btn-book-nav btn-yellow" onClick={close}>
             {t.ctaBook}
             <span aria-hidden="true"> ↑</span>
           </a>

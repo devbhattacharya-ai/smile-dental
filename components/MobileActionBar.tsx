@@ -9,7 +9,7 @@ export default function MobileActionBar() {
   return (
     <div className="mobile-action-bar" role="navigation" aria-label="Quick actions">
       <a href={`tel:+91${CLINIC_TEL}`} className="mab-call">
-        Call clinic
+        {t.mabCall}
       </a>
       <a href="#book" className="mab-book">
         {t.ctaBook}

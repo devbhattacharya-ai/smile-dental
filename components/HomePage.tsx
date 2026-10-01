@@ -9,6 +9,7 @@ import RevealOnScroll from "./RevealOnScroll";
 import BackToTop from "./BackToTop";
 import AssistantDialog from "./AssistantDialog";
 import MobileActionBar from "./MobileActionBar";
+import ClinicParallax from "./ClinicParallax";
 import { LanguageProvider, useLang } from "./LanguageProvider";
 import {
   FEATURED_TREATMENTS,
@@ -17,12 +18,12 @@ import {
 } from "@/lib/i18n";
 
 const TRUST = [
-  "17 focused treatments",
-  "Online booking",
-  "WhatsApp confirmation",
-  "Sector 10 · Kharghar",
-  "4.8 patient rating",
-  "Calm visit flow",
+  "WHATSAPP CONFIRMATION",
+  "ONLINE BOOKING",
+  "17 FOCUSED TREATMENTS",
+  "SECTOR 10 · KHARGHAR",
+  "4.8 PATIENT RATING",
+  "CALM VISIT FLOW",
 ];
 
 function HomeInner() {
@@ -64,27 +65,32 @@ function HomeInner() {
               </h1>
               <p className="hero-support">{t.heroSupport}</p>
               <div className="hero-actions">
-                <a className="btn-primary" href="#book">
+                <a className="btn-primary btn-yellow" href="#book">
                   {t.ctaBook}
                   <span aria-hidden="true"> ↑</span>
                 </a>
-                <a className="btn-ghost" href="#care">
-                  Explore care
-                  <span aria-hidden="true"> ↓</span>
-                </a>
+                <button
+                  type="button"
+                  className="btn-ghost btn-ask"
+                  onClick={() =>
+                    document.querySelector<HTMLButtonElement>(".assistant-fab")?.click()
+                  }
+                >
+                  {t.ctaAsk}
+                </button>
               </div>
               <ul className="hero-proof" aria-label="Clinic highlights">
                 <li>
                   <strong>4.8</strong>
-                  <span>Verified patient rating · 42 reviews</span>
+                  <span>{t.proofRating}</span>
                 </li>
                 <li>
                   <strong>17</strong>
-                  <span>Focused treatments</span>
+                  <span>{t.proofTreatments}</span>
                 </li>
                 <li>
                   <strong>WA</strong>
-                  <span>WhatsApp confirmation</span>
+                  <span>{t.proofWa}</span>
                 </li>
               </ul>
               <p className="concept-chip">{t.conceptChip}</p>
@@ -109,13 +115,12 @@ function HomeInner() {
                   ✦
                 </span>
                 <span>
-                  <strong>Your dentist</strong>
+                  <strong>{t.doctorTitle}</strong>
                   <span className="location-sub">
-                    Dr. Rajeshwar Bhattacharya
+                    {t.doctorName}
                   </span>
                   <span className="doctor-blurb">
-                    Personal, unhurried care with treatment choices explained in
-                    plain language.
+                    {t.doctorBlurb}
                   </span>
                 </span>
               </div>
@@ -147,7 +152,7 @@ function HomeInner() {
           </div>
         </div>
 
-        <section id="care" className="section care" aria-labelledby="care-heading">
+        <section id="care" className="section care band-beige" aria-labelledby="care-heading">
           <div className="section-inner">
             <p className="section-label">{t.careLabel}</p>
             <h2 id="care-heading" className="reveal">
@@ -173,16 +178,16 @@ function HomeInner() {
 
         <section
           id="treatments"
-          className="section treatments"
+          className="section treatments band-green"
           aria-labelledby="treatments-heading"
         >
           <div className="section-inner">
             <p className="section-label">{t.treatmentsLabel}</p>
             <h2 id="treatments-heading" className="reveal">
-              Treatment, without the guesswork
+              {t.treatmentsHeadingAlt}
             </h2>
             <p className="section-intro reveal">
-              Everything your smile may need, in one considered space.
+              {t.treatmentsIntroAlt}
             </p>
             <div className="featured-grid">
               {FEATURED_TREATMENTS.map((item) => (
@@ -196,7 +201,7 @@ function HomeInner() {
                   <h3 lang="en">{item.title}</h3>
                   <p lang="en">{item.body}</p>
                   <a className="btn-text" href="#book">
-                    Start booking →
+                    {t.startBooking} →
                   </a>
                 </article>
               ))}
@@ -204,11 +209,10 @@ function HomeInner() {
 
             <div className="all-treatments reveal">
               <div className="all-treatments-heading">
-                <h3>All treatments</h3>
+                <h3>{t.allTreatmentsTitle}</h3>
                 <p>
-                  A complete view of the care available at the clinic.{" "}
-                  <strong>17 treatments available</strong> — choose any to start
-                  booking.
+                  {t.allTreatmentsIntro}{" "}
+                  <strong>{t.allTreatmentsCount}</strong>
                 </p>
               </div>
               <ul className="treatment-list">
@@ -219,7 +223,7 @@ function HomeInner() {
                 ))}
               </ul>
               <p className="treatment-list-callout">
-                <a className="btn-primary" href="#book">
+                <a className="btn-primary btn-yellow" href="#book">
                   {t.ctaBook}
                 </a>
               </p>
@@ -227,14 +231,14 @@ function HomeInner() {
           </div>
         </section>
 
-        <section id="clinic" className="section clinic" aria-labelledby="clinic-heading">
+        <section id="clinic" className="section clinic band-beige" aria-labelledby="clinic-heading">
           <div className="section-inner">
             <p className="section-label">{t.clinicLabel}</p>
             <h2 id="clinic-heading" className="reveal">
-              Inside the clinic
+              {t.clinicInside}
             </h2>
             <p className="section-intro reveal">
-              Clean, calm and designed around your comfort.
+              {t.clinicInsideIntro}
             </p>
             <div className="clinic-gallery reveal">
               <figure className="gallery-main">
@@ -246,7 +250,7 @@ function HomeInner() {
                   className="gallery-img"
                 />
                 <figcaption className="gallery-brand">
-                  Clear treatment guidance
+                  {t.galleryCap1}
                 </figcaption>
               </figure>
               <figure className="gallery-side-top">
@@ -257,7 +261,7 @@ function HomeInner() {
                   sizes="40vw"
                   className="gallery-img"
                 />
-                <figcaption>Convenient WhatsApp follow-up</figcaption>
+                <figcaption>{t.galleryCap2}</figcaption>
               </figure>
               <figure className="gallery-side-bottom">
                 <Image
@@ -267,7 +271,7 @@ function HomeInner() {
                   sizes="40vw"
                   className="gallery-img"
                 />
-                <figcaption>Easy local access in Sector 10</figcaption>
+                <figcaption>{t.galleryCap3}</figcaption>
               </figure>
             </div>
           </div>
@@ -275,14 +279,14 @@ function HomeInner() {
 
         <section
           id="reviews"
-          className="rating-section section"
+          className="rating-section section band-green"
           aria-labelledby="reviews-heading"
         >
           <div className="rating-copy reveal">
             <p className="section-label">{t.reviewsLabel}</p>
-            <h2 id="reviews-heading">Trusted locally</h2>
-            <p>A 4.8-rated dental clinic in your neighbourhood.</p>
-            <a className="btn-primary rating-button" href="#book">
+            <h2 id="reviews-heading">{t.ratingHeading}</h2>
+            <p>{t.ratingIntro}</p>
+            <a className="btn-primary btn-yellow rating-button" href="#book">
               {t.ctaBook}
             </a>
             <p className="concept-note">{t.reviewsConceptNote}</p>
@@ -295,8 +299,8 @@ function HomeInner() {
             <div className="rating-stars" aria-hidden="true">
               ★★★★★
             </div>
-            <p className="rating-divider">Patient rating</p>
-            <p>Verified reviews · concept layout</p>
+            <p className="rating-divider">{t.ratingPatient}</p>
+            <p>{t.ratingVerified}</p>
           </div>
         </section>
 
@@ -311,15 +315,13 @@ function HomeInner() {
           </div>
         </section>
 
-        <section id="book" className="section book booking-section" aria-labelledby="book-heading">
+        <section id="book" className="section book booking-section band-beige" aria-labelledby="book-heading">
           <div className="section-inner book-layout">
             <div className="booking-intro reveal">
               <p className="section-label">{t.bookLabel}</p>
-              <h2 id="book-heading">Book in under a minute</h2>
+              <h2 id="book-heading">{t.bookHeadingAlt}</h2>
               <p className="section-intro">
-                Tell us what you need. We’ll take it from there — continue on
-                WhatsApp with your details already prepared. The clinic will
-                confirm availability directly.
+                {t.bookIntroAlt}
               </p>
             </div>
             <div className="reveal">
@@ -330,40 +332,46 @@ function HomeInner() {
 
         <FAQ />
 
-        <section className="section visit" aria-labelledby="visit-heading">
+        <section className="section visit band-green" aria-labelledby="visit-heading">
           <div className="section-inner visit-grid">
             <div className="visit-card reveal">
-              <p className="section-label">Visit us</p>
-              <h2 id="visit-heading">Dental care, close to home.</h2>
+              <p className="section-label">{t.visitLabel}</p>
+              <h2 id="visit-heading">{t.visitHeading}</h2>
               <p>
-                <strong>Clinic address</strong>
+                <strong>{t.visitAddressLabel}</strong>
                 <br />
-                Sector 10 · Kopra, Kharghar, Navi Mumbai
+                {t.visitAddress}
               </p>
               <div className="visit-actions">
                 <a
-                  className="btn-primary"
-                  href="https://maps.google.com/?q=Sector+10+Kopra+Kharghar"
+                  className="btn-primary btn-yellow"
+                  href="https://maps.google.com/?q=Smile+Dental+Clinic+Sector+10+Kopra+Kharghar"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Open in Google Maps
+                  {t.visitMaps}
                 </a>
                 <a className="btn-ghost" href="tel:+919022117458">
-                  Call clinic
+                  {t.visitCall}
                 </a>
               </div>
             </div>
-            <div className="visit-map-art reveal" aria-hidden="true">
-              <Image
-                src="/clinic-logo.webp"
-                alt=""
-                width={120}
-                height={120}
-                className="visit-logo"
-              />
-              <p>Sector 10 · Kharghar</p>
-              <p>Thoughtful dental care in Kharghar.</p>
+            <div className="visit-map reveal">
+              <div className="map-frame">
+                <iframe
+                  title="Smile Dental Clinic map"
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=73.055%2C19.033%2C73.085%2C19.055&amp;layer=mapnik&amp;marker=19.044%2C73.070"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+                <div className="map-pin" role="img" aria-label="Smile Dental Clinic">
+                  <span className="map-pin-badge">
+                    <img src="/clinic-logo.webp" alt="" width={36} height={36} />
+                  </span>
+                  <span className="map-pin-label">Smile Dental</span>
+                </div>
+              </div>
+              <p className="visit-tag">{t.visitTag}</p>
             </div>
           </div>
         </section>
@@ -402,6 +410,7 @@ function HomeInner() {
       <AssistantDialog />
       <BackToTop />
       <MobileActionBar />
+      <ClinicParallax />
       <RevealOnScroll />
     </>
   );
