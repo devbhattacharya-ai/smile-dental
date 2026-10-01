@@ -6,7 +6,8 @@
   --forest-mid: #243526;
   --forest-soft: #2f4531;
   --lime: #c5d86d;
-  --lime-deep: #a8bc4f;
+  --lime-deep: #5f6e22; /* AA text on cream/white (~5.1:1) */
+  --lime-mid: #b5c85a; /* CTA hover bg; forest text stays AA */
   --cream: #f4f3ef;
   --cream-deep: #e8e6df;
   --white: #ffffff;
@@ -491,7 +492,7 @@ select {
 }
 
 .hero .btn-primary:hover {
-  background: var(--lime-deep);
+  background: var(--lime-mid);
 }
 
 .hero .btn-primary:focus-visible {
@@ -793,6 +794,19 @@ select {
   margin: 0;
   font-size: 0.85rem;
   color: var(--muted);
+}
+
+.field-error {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #9a3412;
+}
+
+.field input[aria-invalid="true"],
+.field select[aria-invalid="true"],
+.field textarea[aria-invalid="true"] {
+  border-color: #9a3412;
 }
 
 .success-box h3 {

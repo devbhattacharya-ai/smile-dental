@@ -54,7 +54,7 @@ export default function Header() {
             <div
               className="lang-toggle"
               role="group"
-              aria-label={lang === "en" ? t.langSwitchToMr : t.langSwitchToEn}
+              aria-label={t.langGroup}
             >
               <button
                 type="button"
@@ -117,7 +117,7 @@ export default function Header() {
               </li>
             ))}
           </ul>
-          <div className="lang-toggle mobile-lang" role="group" aria-label={lang === "en" ? t.langSwitchToMr : t.langSwitchToEn}>
+          <div className="lang-toggle mobile-lang" role="group" aria-label={t.langGroup}>
             <button
               type="button"
               className={lang === "en" ? "lang-btn active" : "lang-btn"}

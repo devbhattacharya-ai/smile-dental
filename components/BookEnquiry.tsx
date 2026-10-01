@@ -1,14 +1,30 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useId, useState } from "react";
 import { useLang } from "./LanguageProvider";
+
+type FieldErrors = {
+  name?: string;
+};
 
 export default function BookEnquiry() {
   const { t } = useLang();
   const [sent, setSent] = useState(false);
+  const [errors, setErrors] = useState<FieldErrors>({});
+  const nameErrorId = useId();
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const name = String(data.get("name") ?? "").trim();
+    const next: FieldErrors = {};
+    if (!name) next.name = t.bookNameError;
+    setErrors(next);
+    if (Object.keys(next).length > 0) {
+      requestAnimationFrame(() => document.getElementById("guest-name")?.focus());
+      return;
+    }
     setSent(true);
   }
 
@@ -18,7 +34,14 @@ export default function BookEnquiry() {
         <div className="success-box">
           <h3>{t.bookSuccessTitle}</h3>
           <p>{t.bookSuccessBody}</p>
-          <button type="button" className="btn-secondary" onClick={() => setSent(false)}>
+          <button
+            type="button"
+            className="btn-secondary"
+            onClick={() => {
+              setSent(false);
+              setErrors({});
+            }}
+          >
             {t.bookSuccessReset}
           </button>
         </div>
@@ -38,7 +61,19 @@ export default function BookEnquiry() {
             autoComplete="name"
             required
             placeholder={t.bookNamePh}
+            aria-invalid={errors.name ? true : undefined}
+            aria-describedby={errors.name ? nameErrorId : undefined}
+            onChange={() =>
+              setErrors((prev) =>
+                prev.name ? { ...prev, name: undefined } : prev
+              )
+            }
           />
+          {errors.name ? (
+            <p className="field-error" id={nameErrorId} role="alert">
+              {errors.name}
+            </p>
+          ) : null}
         </div>
         <div className="field">
           <label htmlFor="guest-time">{t.bookTime}</label>
