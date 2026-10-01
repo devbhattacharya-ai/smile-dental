@@ -189,45 +189,97 @@ export const strings = {
 
 export type StringKey = keyof typeof strings.en;
 
-/** Treatments stay EN for P0 (core strings only: hero/nav/CTA). */
-export const TREATMENTS = [
+/** Treatments stay EN for body; hero/nav/CTA remain bilingual. */
+export const FEATURED_TREATMENTS = [
   {
-    title: "Routine check-up",
-    body: "A calm first look at oral health and what to prioritise next.",
-  },
-  {
-    title: "Teeth cleaning",
-    body: "Professional clean focused on comfort and clear aftercare notes.",
-  },
-  {
-    title: "Fillings & restorations",
-    body: "Repair options explained in plain language before you decide.",
+    title: "Dental implants",
+    body: "A considered path to replace missing teeth and restore everyday confidence.",
+    index: "01",
   },
   {
     title: "Root canal care",
-    body: "Step-by-step information so the visit feels less uncertain.",
+    body: "Focused care designed to relieve discomfort and preserve your natural tooth.",
+    index: "02",
   },
   {
-    title: "Crowns & bridges",
-    body: "When they help, how they look, and what the journey involves.",
+    title: "Smile design",
+    body: "Whitening, veneers, crowns and bonding planned around your smile.",
+    index: "03",
   },
   {
-    title: "Implants (overview)",
-    body: "High-level implant centre info — detailed plans stay with the clinic.",
+    title: "Preventive care",
+    body: "Routine check-ups, X-rays and cleaning to catch concerns early.",
+    index: "04",
+  },
+  {
+    title: "Children’s dentistry",
+    body: "A calm, reassuring approach for younger patients and their families.",
+    index: "05",
+  },
+  {
+    title: "Restorative dentistry",
+    body: "Fillings, bridges, dentures and crowns to restore comfortable function.",
+    index: "06",
   },
 ] as const;
 
+export const ALL_TREATMENTS = [
+  "X-ray",
+  "Online dentist booking",
+  "Cosmetic procedures",
+  "Check-ups",
+  "Veneers & crowns",
+  "Teeth whitening",
+  "Extractions",
+  "Teeth cleaning",
+  "Teeth reshaping",
+  "Dentures & bridges",
+  "Paediatrics",
+  "Bonding",
+  "Fillings & sealants",
+  "Mouth guards",
+  "Oral surgery",
+  "Root canal treatment",
+  "Dental implants",
+] as const;
+
+/** @deprecated use FEATURED_TREATMENTS */
+export const TREATMENTS = FEATURED_TREATMENTS.map(({ title, body }) => ({
+  title,
+  body,
+}));
+
 export const REVIEWS = [
   {
-    quote: "Clear explanations before any treatment talk. The site made booking feel simple.",
-    name: "Concept visitor A",
+    name: "Priya M.",
+    quote: "Calm explanations and a booking path that felt easy to follow.",
   },
   {
-    quote: "I could read in Marathi and still find Care, Treatments, and Book in one place.",
-    name: "Concept visitor B",
+    name: "Arjun K.",
+    quote: "The clinic story and treatment cards made the next step obvious.",
   },
   {
-    quote: "The enquiry form asked only what mattered — no endless calendar maze.",
-    name: "Concept visitor C",
+    name: "Neha S.",
+    quote: "Clear WhatsApp-style confirmation flow in this concept demo.",
   },
 ] as const;
+
+export const FAQS = [
+  {
+    q: "Does submitting the form confirm my appointment?",
+    a: "No. Continuing on WhatsApp opens a pre-filled message to the clinic number. The clinic confirms availability directly — this demo does not book a live slot.",
+  },
+  {
+    q: "Can I contact the clinic without completing the form?",
+    a: "Yes. You can call 90221 17458 or use the mobile action bar. The form simply prepares your details for WhatsApp.",
+  },
+  {
+    q: "What does the website assistant do?",
+    a: "The assistant helps you start booking only. It does not provide medical diagnosis or treatment advice.",
+  },
+  {
+    q: "Where is Smile Dental Clinic located?",
+    a: "Sector 10 · Kopra, Kharghar, Navi Mumbai (concept address used for this portfolio demo).",
+  },
+] as const;
+
