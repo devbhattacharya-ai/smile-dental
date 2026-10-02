@@ -35,6 +35,12 @@ export const Route = createRootRoute({
     <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "setTimeout(function(){var s=document.createElement('style');s.textContent='.lang-hint,.lang-switch{animation:none!important}.lang-hint{opacity:0!important;visibility:hidden!important}';document.head.appendChild(s);},2500);",
+          }}
+        />
       </head>
       <body>
         <PreviewHostBridge />

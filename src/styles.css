@@ -27,8 +27,9 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     scroll-padding-top: 84px;
+    overflow-anchor: none;
   }
 
   body {
@@ -64,6 +65,7 @@
       transition: none !important;
     }
     .will-reveal { opacity: 1 !important; transform: none !important; }
+    .mobile-nav.is-open a { opacity: 1 !important; transform: none !important; }
   }
 }
 
@@ -99,6 +101,7 @@
   background: color-mix(in srgb, var(--color-paper) 92%, transparent);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--color-line);
+  overflow-anchor: none;
 }
 
 .header-inner,
@@ -203,6 +206,8 @@
   border-radius: 999px;
   background: color-mix(in srgb, var(--color-forest) 7%, var(--color-paper));
   border: 1px solid var(--color-line);
+  overflow-anchor: none;
+  animation: lang-glow 1s ease-in-out 2;
 }
 .lang-switch button {
   border: 0;
@@ -251,28 +256,27 @@
 }
 .lang-knob.is-mr::after { transform: translateX(16px); }
 
-.lang-switch.is-hinting {
-  animation: lang-glow 1s ease-in-out 2;
-}
 @keyframes lang-glow {
   0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-gold) 0%, transparent); }
   50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-gold) 62%, transparent); }
 }
 .lang-hint {
-  position: absolute;
-  top: calc(100% + 12px);
-  right: 0;
-  z-index: 6;
+  position: fixed;
+  top: 4.7rem;
+  right: max(0.85rem, calc((100vw - 1180px) / 2));
+  z-index: 45;
   margin: 0;
   width: max-content;
-  max-width: 220px;
+  max-width: min(220px, calc(100vw - 1.5rem));
   padding: 0.65rem 0.8rem 0.58rem;
   border-radius: 14px;
   background: var(--color-paper);
   color: var(--color-forest);
   border: 1px solid var(--color-line);
   box-shadow: 0 14px 30px color-mix(in srgb, var(--color-forest) 22%, transparent);
-  animation: lang-hint-in 420ms ease both;
+  pointer-events: none;
+  overflow-anchor: none;
+  animation: lang-hint-in 420ms ease both, lang-hint-out 420ms ease 2000ms forwards;
 }
 .lang-hint::before {
   content: "";
@@ -307,8 +311,8 @@
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes lang-hint-out {
-  from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(-6px); }
+  from { opacity: 1; transform: translateY(0); visibility: visible; }
+  to { opacity: 0; transform: translateY(-6px); visibility: hidden; }
 }
 
 .btn-book, .btn-gold, .btn-ghost, .btn-line, .btn-mint {
@@ -395,10 +399,31 @@
   }
 }
 
+.menu-btn svg {
+  animation: menu-icon-in 0.38s cubic-bezier(.22, .61, .36, 1) both;
+}
+@keyframes menu-icon-in {
+  from { opacity: 0; transform: rotate(-70deg) scale(0.86); }
+  to { opacity: 1; transform: none; }
+}
+
 .mobile-nav {
   display: grid;
-  padding: 0.25rem 1rem 1rem;
-  border-top: 1px solid var(--color-line);
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.48s cubic-bezier(.22, .61, .36, 1);
+  border-top: 1px solid transparent;
+}
+.mobile-nav.is-open {
+  grid-template-rows: 1fr;
+  border-top-color: var(--color-line);
+}
+.mobile-nav-list {
+  overflow: hidden;
+  min-height: 0;
+  display: grid;
+}
+.mobile-nav.is-open .mobile-nav-list {
+  padding: 0.15rem 1rem 0.85rem;
 }
 .mobile-nav a {
   color: var(--color-ink);
@@ -406,6 +431,16 @@
   padding: 0.85rem 0;
   border-bottom: 1px solid var(--color-line);
   font-weight: 550;
+  opacity: 0;
+  transform: translateY(12px);
+}
+.mobile-nav.is-open a {
+  animation: menu-item-in 0.52s cubic-bezier(.22, .61, .36, 1) both;
+  animation-delay: calc(var(--i) * 75ms + 50ms);
+}
+@keyframes menu-item-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
 }
 
 .hero {
@@ -1399,7 +1434,7 @@
 
 @media (min-width: 900px) {
   .desktop-nav { display: flex; }
-  .menu-btn, .mobile-nav, .mobile-bar { display: none; }
+  .menu-btn, .mobile-nav, .mobile-nav.is-open, .mobile-bar { display: none; }
   .site-footer { padding-bottom: 2.5rem; }
   .to-top { bottom: 1.3rem; }
   .hero {
@@ -1523,6 +1558,5 @@ input[type="date"], input[type="time"] { color-scheme: light; }
 .assist-options button:hover { transform: translateX(4px); }
 .select-menu { animation: soft-rise 0.24s cubic-bezier(.22, .61, .36, 1); }
 .faq-panel { animation: soft-in 0.28s ease; }
-.mobile-nav { animation: soft-rise 0.3s cubic-bezier(.22, .61, .36, 1); }
 .mobile-bar { animation: bar-in 0.55s cubic-bezier(.22, .61, .36, 1) 0.3s both; }
 .to-top { animation: soft-rise 0.35s cubic-bezier(.22, .61, .36, 1); }

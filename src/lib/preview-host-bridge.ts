@@ -117,7 +117,12 @@ export function installPreviewHostBridge(
         current && typeof current === "object"
           ? { ...current, [ROOT_STATE_KEY]: isRoot }
           : { [ROOT_STATE_KEY]: isRoot };
+      const scrollX = window.scrollX;
+      const scrollY = window.scrollY;
       originalReplaceState(marked, "", window.location.href);
+      if (window.scrollX !== scrollX || window.scrollY !== scrollY) {
+        window.scrollTo(scrollX, scrollY);
+      }
     }
   } catch {
     // ignore if the document cannot be marked

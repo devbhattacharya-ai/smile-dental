@@ -405,7 +405,6 @@ export function ClinicPage() {
   const [assistName, setAssistName] = useState("");
   const [assistPhone, setAssistPhone] = useState("");
   const [assistError, setAssistError] = useState("");
-  const [langHint, setLangHint] = useState<"in" | "out" | "off">("off");
   const treatRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const formId = useId();
@@ -419,16 +418,6 @@ export function ClinicPage() {
   useEffect(() => {
     document.documentElement.lang = lang === "mr" ? "mr" : "en";
   }, [lang]);
-
-  useEffect(() => {
-    setLangHint("in");
-    const leave = window.setTimeout(() => setLangHint("out"), 2000);
-    const done = window.setTimeout(() => setLangHint("off"), 2480);
-    return () => {
-      window.clearTimeout(leave);
-      window.clearTimeout(done);
-    };
-  }, []);
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -618,7 +607,7 @@ export function ClinicPage() {
             ))}
           </nav>
           <div className="header-tools">
-            <div className={`lang-switch${langHint === "off" ? "" : " is-hinting"}`} role="group" aria-label="Language">
+            <div className="lang-switch" role="group" aria-label="Language">
               <button
                 type="button"
                 className={lang === "en" ? "is-on" : undefined}
@@ -644,12 +633,6 @@ export function ClinicPage() {
               >
                 मराठी
               </button>
-              {langHint !== "off" ? (
-                <p className={`lang-hint${langHint === "out" ? " is-out" : ""}`} role="status">
-                  <strong>You can change the language</strong>
-                  <span lang="mr">भाषा येथे बदलू शकता</span>
-                </p>
-              ) : null}
             </div>
             <a
               className="btn-book"
@@ -674,12 +657,14 @@ export function ClinicPage() {
             </button>
           </div>
         </div>
-        {menu ? (
-          <div id="mobile-nav" className="mobile-nav">
-            {NAV.map((item) => (
+        <div id="mobile-nav" className={menu ? "mobile-nav is-open" : "mobile-nav"} aria-hidden={menu ? undefined : true}>
+          <div className="mobile-nav-list">
+            {NAV.map((item, index) => (
               <a
                 key={item.id}
                 href={`#${item.id}`}
+                style={{ "--i": index } as CSSProperties}
+                tabIndex={menu ? undefined : -1}
                 onClick={(event) => {
                   event.preventDefault();
                   go(item.id);
@@ -689,8 +674,12 @@ export function ClinicPage() {
               </a>
             ))}
           </div>
-        ) : null}
+        </div>
       </header>
+      <p className="lang-hint">
+        <strong>You can change the language</strong>
+        <span lang="mr">भाषा येथे बदलू शकता</span>
+      </p>
 
       <main id="main">
         <section className="hero" aria-labelledby="hero-heading">
